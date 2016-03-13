@@ -162,20 +162,12 @@ Choice.options do
     long '--enable'
     short '-e'
     desc 'install lolcommits for this repo'
-    action do
-      Installation.do_enable
-      exit 0
-    end
   end
 
   option :disable do
     long '--disable'
     short '-d'
     desc 'uninstall lolcommits for this repo'
-    action do
-      Installation.do_disable
-      exit 0
-    end
   end
 
   option :capture do
@@ -312,7 +304,11 @@ load_local_plugins!
 #
 # Handle actions manually since choice seems weird
 #
-if Choice.choices[:capture]
+if Choice.choices[:enable]
+  Installation.do_enable
+elsif Choice.choices[:disable]
+  Installation.do_disable
+elsif Choice.choices[:capture]
   do_capture
 elsif Choice.choices[:configure]
   do_configure
